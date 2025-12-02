@@ -47,18 +47,46 @@ export default function FavoriteScreen() {
     );
   }
 
+  const renderFavoriteRecipe = ({ item }) => (
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onPress={() => navigation.navigate("RecipeDetail", { recipe: item })}
+      testID="favoriteRecipeCard"
+    >
+      <Image
+        source={{ uri: item.recipeImage }}
+        style={styles.recipeImage}
+      />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.recipeTitle} numberOfLines={2}>
+          {item.recipeName?.substring(0, 20)}
+          {item.recipeName?.length > 20 ? "..." : ""}
+        </Text>
+        <Text style={{ color: "#6B7280", fontSize: hp(1.5), marginTop: hp(0.5) }}>
+          {item.recipeCategory}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
-    <>
+    <View style={{ flex: 1 }}>
       {/* Heading */}
       <View testID="FavoriteRecipes">
         <Text
-          style={{ fontSize: hp(3.8), marginTop: hp(4), marginLeft: 20 }}
-          className="font-semibold text-neutral-600"
+          style={{
+            fontSize: hp(3.8),
+            marginTop: hp(4),
+            marginLeft: 20,
+            fontWeight: "600",
+            color: "#4B5563",
+          }}
         >
           My Favorite Recipes
         </Text>
       </View>
-    
+
+      {/* Go Back Button */}
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
@@ -71,10 +99,18 @@ export default function FavoriteScreen() {
           marginLeft: 20,
         }}
       >
-        <Text style={{ color: "#fff" }}>Go back</Text>
+        <Text style={{ color: "#fff", fontWeight: "600" }}>Go back</Text>
       </TouchableOpacity>
-    
-    </>
+
+      {/* Favorite Recipes List */}
+      <FlatList
+        data={favoriteRecipesList}
+        keyExtractor={(item) => item.idFood}
+        contentContainerStyle={styles.listContentContainer}
+        scrollEnabled={true}
+        renderItem={renderFavoriteRecipe}
+      />
+    </View>
   );
 }
 
