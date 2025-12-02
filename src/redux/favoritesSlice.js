@@ -8,7 +8,20 @@ const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
-   
+    toggleFavorite: (state, action) => {
+      // Check if recipe already exists in favorites by comparing idFood
+      const recipeIndex = state.favoriterecipes.findIndex(
+        (recipe) => recipe.idFood === action.payload.idFood
+      );
+
+      if (recipeIndex > -1) {
+        // Recipe exists, remove it from favorites
+        state.favoriterecipes.splice(recipeIndex, 1);
+      } else {
+        // Recipe doesn't exist, add it to favorites
+        state.favoriterecipes.push(action.payload);
+      }
+    },
   },
 });
 
