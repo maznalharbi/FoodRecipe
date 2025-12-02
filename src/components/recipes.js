@@ -17,6 +17,8 @@ export default function Recipe({ categories, foods }) {
           data={foods}
           keyExtractor={(item) => item.recipeId}
           scrollEnabled={false}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
           renderItem={renderItem}
         />
       </View>
@@ -27,7 +29,8 @@ export default function Recipe({ categories, foods }) {
 const ArticleCard = ({ item, index, navigation }) => {
   return (
     <TouchableOpacity
-      style={[styles.cardContainer, { paddingLeft: 20, paddingRight: 15}]} testID="articleDisplay"
+      style={styles.cardContainer}
+      testID="articleDisplay"
       onPress={() => navigation.navigate("RecipeDetail", { recipe: item })}
     >
       <Image
@@ -58,8 +61,9 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     justifyContent: "center",
-    marginBottom: hp(1.5),
+    marginBottom: hp(2),
     flex: 1, // Allows cards to grow and fill space evenly
+    marginHorizontal: wp(2),
   },
   articleImage: {
     width: "100%",
