@@ -33,7 +33,10 @@ export default function RecipeDetailScreen(props) {
     >
       {/* recipe Image */}
       <View style={styles.imageContainer} testID="imageContainer">
-     
+        <Image
+          source={{ uri: recipe.recipeImage }}
+          style={styles.recipeImage}
+        />
       </View>
 
       {/* Back Button and Favorite Button */}
@@ -66,28 +69,54 @@ export default function RecipeDetailScreen(props) {
             testID="recipeDetailsContainer"
           >
             <Text style={styles.recipeTitle} testID="recipeTitle">
-         
-              
-              </Text>
+              {recipe.recipeName}
+            </Text>
             <Text style={styles.recipeCategory} testID="recipeCategory">
-              </Text>
+              {recipe.recipeCategory}
+            </Text>
           </View>
           <View style={styles.miscContainer} testID="miscContainer">
-        
-      </View>
+            <View style={styles.miscItem}>
+              <Text style={styles.miscIcon}>⏱️</Text>
+              <Text style={styles.miscText}>30 mins</Text>
+            </View>
+            <View style={styles.miscItem}>
+              <Text style={styles.miscIcon}>👥</Text>
+              <Text style={styles.miscText}>4 servings</Text>
+            </View>
+            <View style={styles.miscItem}>
+              <Text style={styles.miscIcon}>🔥</Text>
+              <Text style={styles.miscText}>300 cal</Text>
+            </View>
+            <View style={styles.miscItem}>
+              <Text style={styles.miscIcon}>🍽️</Text>
+              <Text style={styles.miscText}>{recipe.category}</Text>
+            </View>
+          </View>
 
       {/* Ingredients */}
-      <View style={styles.sectionContainer}>
-     
+      <View style={styles.sectionContainer} testID="sectionContainer">
+        <Text style={styles.sectionTitle}>Ingredients</Text>
+        <View style={styles.ingredientsList} testID="ingredientsList">
+          {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+            <View key={index} style={styles.ingredientItem}>
+              <View style={styles.ingredientBullet} />
+              <Text style={styles.ingredientText}>
+                {ingredient.ingredientName} - {ingredient.measure}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </View>
       </View>
 
       {/* Instructions */}
-      <View style={styles.sectionContainer} testID="sectionContainer">
-        
-        </View>
-          {/* Description */}
-         
-        </View>
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Instructions</Text>
+        <Text style={styles.instructionsText}>
+          {recipe.recipeInstructions}
+        </Text>
+      </View>
     </ScrollView>
   );
 }
@@ -157,73 +186,6 @@ const styles = StyleSheet.create({
     fontSize: hp(2.5),
     fontWeight: "bold",
     color: "#4B5563", // text-neutral-700
-  },
-  descriptionText: {
-    fontSize: hp(1.8),
-    color: "#4B5563", // text-neutral-700
-    textAlign: "justify",
-    lineHeight: hp(2.5),
-  },
-  container: {
-    backgroundColor: "white",
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 30,
-  },
-  imageContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  recipeImage: {
-    width: wp(98),
-    height: hp(45),
-    borderRadius: 20,
-    marginTop: 4,
-  },
-  topButtonsContainer: {
-    width: "100%",
-    position: "absolute",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: hp(4),
-  },
-  backButton: {
-    padding: 10,
-    borderRadius: 20,
-    backgroundColor: "#f0f0f0",
-    marginLeft: wp(5),
-  },
-  backButtonText: {
-    fontSize: hp(2),
-    color: "#333",
-    fontWeight: "bold",
-  },
-  favoriteButton: {
-    padding: 10,
-    borderRadius: 20,
-    marginRight: wp(5),
-  },
-  favoriteButtonText: {
-    fontSize: hp(2),
-    color: "red",
-  },
-  mealName: {
-    fontSize: hp(4),
-    fontWeight: "bold",
-    color: "#333",
-    textAlign: "center",
-    marginVertical: 10,
-    fontFamily: "Roboto",
-  },
-  mealCategory: {
-    fontSize: hp(2),
-    color: "#666",
-    textAlign: "center",
-    marginBottom: 20,
-    fontFamily: "Roboto",
   },
   miscContainer: {
     flexDirection: "row",
