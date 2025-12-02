@@ -28,7 +28,9 @@ import {
     );
     console.log('favoriteRecipe from custom',favoriteRecipe);
     
-    const isFavourite = favoriteRecipe.includes(recipe.idCategory); // Adjust this according to your recipe structure
+    const isFavourite = favoriteRecipe?.some(
+      (favrecipe) => favrecipe.id === recipe.id
+    ); // Check if recipe is in favorites by comparing id
   
     if (!recipe) {
       return (
@@ -97,7 +99,7 @@ import {
     },
     recipeImage: {
       width: wp(98),
-      height: hp(50),
+      height: hp(25),
       borderRadius: 35,
       borderBottomLeftRadius: 40,
       borderBottomRightRadius: 40,
