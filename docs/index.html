@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recipe App - React Native</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin: 20px 0;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background: #e8f4f8;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .tech-stack {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .tech-stack h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .tech-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            .emoji {
+                font-size: 40px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="emoji">🍽️</div>
+            <h1>Food Recipe App</h1>
+            <p>A Powerful React Native Application</p>
+        </header>
+
+        <div class="content">
+            <p style="font-size: 18px; text-align: center; margin-bottom: 30px;">
+                Browse, create, and manage your favorite food recipes with a beautiful and intuitive interface.
+            </p>
+
+            <div class="buttons">
+                <a href="https://github.com/maznalharbi/FoodRecipe" class="btn btn-primary">
+                    View on GitHub
+                </a>
+                <a href="https://github.com/maznalharbi/FoodRecipe#-getting-started" class="btn btn-secondary">
+                    Get Started
+                </a>
+            </div>
+
+            <h2 style="text-align: center; color: #667eea; margin: 40px 0 30px;">✨ Key Features</h2>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <h3>Browse Recipes</h3>
+                    <p>Explore hundreds of delicious recipes organized by category</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">❤️</div>
+                    <h3>Favorites</h3>
+                    <p>Save your favorite recipes with Redux state management</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">➕</div>
+                    <h3>Create Recipes</h3>
+                    <p>Create and manage your own custom recipes</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Filter & Search</h3>
+                    <p>Quickly find recipes by category</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>Works beautifully on all devices</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Smooth</h3>
+                    <p>Optimized performance with smooth animations</p>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h2>🛠️ Technology Stack</h2>
+                <div class="tech-list">
+                    <div class="tech-item">React Native</div>
+                    <div class="tech-item">Redux Toolkit</div>
+                    <div class="tech-item">Expo</div>
+                    <div class="tech-item">AsyncStorage</div>
+                    <div class="tech-item">React Navigation</div>
+                    <div class="tech-item">React Reanimated</div>
+                </div>
+            </div>
+
+            <div style="background: #f0f8ff; padding: 20px; border-radius: 10px; margin: 30px 0; border-left: 4px solid #667eea;">
+                <h3 style="color: #667eea; margin-bottom: 10px;">📦 Ready to Use</h3>
+                <p>Clone the repository and start building your own recipe app in minutes. Full source code available with comprehensive documentation.</p>
+            </div>
+
+            <div class="buttons" style="margin-top: 40px;">
+                <a href="https://github.com/maznalharbi/FoodRecipe" class="btn btn-primary">
+                    ⭐ Star on GitHub
+                </a>
+                <a href="https://github.com/maznalharbi/FoodRecipe/issues" class="btn btn-secondary">
+                    Report Issues
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Made with ❤️ by <span class="highlight">Mazn Alharbi</span> | <a href="https://github.com/maznalharbi" style="color: #667eea; text-decoration: none;">GitHub Profile</a></p>
+        </footer>
+    </div>
+</body>
+</html>
