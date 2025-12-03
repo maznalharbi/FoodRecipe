@@ -47,27 +47,41 @@ export default function FavoriteScreen() {
     );
   }
 
-  const renderFavoriteRecipe = ({ item }) => (
-    <TouchableOpacity
-      style={styles.cardContainer}
-      onPress={() => navigation.navigate("RecipeDetail", { recipe: item })}
-      testID="favoriteRecipeCard"
-    >
-      <Image
-        source={{ uri: item.recipeImage }}
-        style={styles.recipeImage}
-      />
-      <View style={{ flex: 1 }}>
-        <Text style={styles.recipeTitle} numberOfLines={2}>
-          {item.recipeName?.substring(0, 20)}
-          {item.recipeName?.length > 20 ? "..." : ""}
-        </Text>
-        <Text style={{ color: "#6B7280", fontSize: hp(1.5), marginTop: hp(0.5) }}>
-          {item.recipeCategory}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const renderFavoriteRecipe = ({ item }) => {
+    // Determine if this is a custom recipe or a database recipe
+    const isCustomRecipe = item.title && item.image && item.description && !item.recipeName;
+
+    return (
+      <TouchableOpacity
+        style={styles.cardContainer}
+        onPress={() => {
+          if (isCustomRecipe) {
+            navigation.navigate("CustomRecipesScreen", { recipe: item });
+          } else {
+            navigation.navigate("RecipeDetail", { recipe: item });
+          }
+        }}
+        testID="favoriteRecipeCard"
+      >
+        <Image
+          source={{ uri: isCustomRecipe ? item.image : item.recipeImage }}
+          style={styles.recipeImage}
+        />
+        <View style={{ flex: 1 }}>
+          <Text style={styles.recipeTitle} numberOfLines={2}>
+            {isCustomRecipe
+              ? item.title?.substring(0, 20)
+              : item.recipeName?.substring(0, 20)
+            }
+            {(isCustomRecipe ? item.title : item.recipeName)?.length > 20 ? "..." : ""}
+          </Text>
+          <Text style={{ color: "#6B7280", fontSize: hp(1.5), marginTop: hp(0.5) }}>
+            {isCustomRecipe ? "Custom Recipe" : item.recipeCategory}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -105,7 +119,7 @@ export default function FavoriteScreen() {
       {/* Favorite Recipes List */}
       <FlatList
         data={favoriteRecipesList}
-        keyExtractor={(item) => item.idFood}
+        keyExtractor={(item) => item.idFood || item.id || item.recipeName || Math.random().toString()}
         contentContainerStyle={styles.listContentContainer}
         scrollEnabled={true}
         renderItem={renderFavoriteRecipe}
