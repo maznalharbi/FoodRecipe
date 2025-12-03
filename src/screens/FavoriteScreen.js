@@ -20,8 +20,9 @@ export default function FavoriteScreen() {
   // Assuming you have a similar structure for recipes in your Redux store
   const favoriteRecipes = useSelector((state) => state.favorites);
   const favoriteRecipesList = favoriteRecipes?.favoriterecipes || [];
-  console.log(favoriteRecipes.favoriterecipes);
-  console.log('favoriteRecipesList',favoriteRecipesList);
+  console.log('DEBUG - Full favorites state:', favoriteRecipes);
+  console.log('DEBUG - Favorite recipes list:', favoriteRecipesList);
+  console.log('DEBUG - List length:', favoriteRecipesList.length);
   
   
 
@@ -48,8 +49,15 @@ export default function FavoriteScreen() {
   }
 
   const renderFavoriteRecipe = ({ item }) => {
+    if (!item) {
+      return null;
+    }
+
     // Determine if this is a custom recipe or a database recipe
     const isCustomRecipe = item.title && item.image && item.description && !item.recipeName;
+    const displayTitle = isCustomRecipe ? item.title : item.recipeName;
+
+    console.log('DEBUG - Rendering recipe:', { displayTitle, isCustomRecipe });
 
     return (
       <TouchableOpacity
@@ -84,44 +92,49 @@ export default function FavoriteScreen() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* Heading */}
-      <View testID="FavoriteRecipes">
-        <Text
+    <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.headerSection}>
+        {/* Heading */}
+        <View testID="FavoriteRecipes">
+          <Text
+            style={{
+              fontSize: hp(3.8),
+              marginTop: hp(2),
+              marginLeft: 20,
+              fontWeight: "600",
+              color: "#4B5563",
+            }}
+          >
+            My Favorite Recipes
+          </Text>
+        </View>
+
+        {/* Go Back Button */}
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
           style={{
-            fontSize: hp(3.8),
-            marginTop: hp(4),
+            backgroundColor: "#2563EB",
+            padding: 10,
+            borderRadius: 5,
+            marginTop: 10,
+            width: 100,
+            alignItems: "center",
             marginLeft: 20,
-            fontWeight: "600",
-            color: "#4B5563",
+            marginBottom: 10,
           }}
         >
-          My Favorite Recipes
-        </Text>
+          <Text style={{ color: "#fff", fontWeight: "600" }}>Go back</Text>
+        </TouchableOpacity>
       </View>
-
-      {/* Go Back Button */}
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{
-          backgroundColor: "#2563EB",
-          padding: 10,
-          borderRadius: 5,
-          marginTop: 10,
-          width: 100,
-          alignItems: "center",
-          marginLeft: 20,
-        }}
-      >
-        <Text style={{ color: "#fff", fontWeight: "600" }}>Go back</Text>
-      </TouchableOpacity>
 
       {/* Favorite Recipes List */}
       <FlatList
         data={favoriteRecipesList}
-        keyExtractor={(item) => item.idFood || item.id || item.recipeName || Math.random().toString()}
+        keyExtractor={(item, index) => (item.idFood || item.id || item.recipeName || index.toString())}
         contentContainerStyle={styles.listContentContainer}
         scrollEnabled={true}
+        nestedScrollEnabled={true}
         renderItem={renderFavoriteRecipe}
       />
     </View>
@@ -129,6 +142,13 @@ export default function FavoriteScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F9FAFB",
+  },
+  headerSection: {
+    paddingBottom: hp(1),
+  },
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
@@ -141,6 +161,7 @@ const styles = StyleSheet.create({
   listContentContainer: {
     paddingHorizontal: wp(4),
     paddingVertical: hp(2),
+    flexGrow: 1,
   },
   cardContainer: {
     backgroundColor: "white",

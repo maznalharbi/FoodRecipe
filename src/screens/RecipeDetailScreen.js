@@ -9,21 +9,31 @@ import { useDispatch, useSelector } from "react-redux"; // Redux hooks
 import { toggleFavorite } from "../redux/favoritesSlice"; // Redux action
 
 export default function RecipeDetailScreen(props) {
-  const recipe = props.route.params; // recipe passed from previous screen
+  const recipe = props.route.params?.recipe; // recipe passed from previous screen
 
   const dispatch = useDispatch();
   const favoriterecipes = useSelector(
     (state) => state.favorites.favoriterecipes
   );
   const isFavourite = favoriterecipes?.some(
-    (favrecipe) => (favrecipe.idFood || favrecipe.id) === (recipe.idFood || recipe.id)
+    (favrecipe) => (favrecipe.idFood || favrecipe.id) === (recipe?.idFood || recipe?.id)
   ); // Check by idFood or id
 
   const navigation = useNavigation();
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavorite(recipe)); // Dispatch the recipe to favorites
+    if (recipe) {
+      dispatch(toggleFavorite(recipe)); // Dispatch the recipe to favorites
+    }
   };
+
+  if (!recipe) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.notFoundText}>Recipe not found</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView
