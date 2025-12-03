@@ -9,9 +9,10 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     toggleFavorite: (state, action) => {
-      // Check if recipe already exists in favorites by comparing idFood
+      // Check if recipe already exists in favorites by comparing idFood or id
+      const recipeId = action.payload.idFood || action.payload.id;
       const recipeIndex = state.favoriterecipes.findIndex(
-        (recipe) => recipe.idFood === action.payload.idFood
+        (recipe) => (recipe.idFood || recipe.id) === recipeId
       );
 
       if (recipeIndex > -1) {
